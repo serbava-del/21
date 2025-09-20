@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Feliz 21 de Septiembre</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #ffefff, #ffe6cc);
+      font-family: sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      color: #d6006f;
+      margin-top: 40px;
+      font-size: 3em;
+    }
+
+    .flor-emoji {
+      color: #FFD700;
+    }
+
+    #contador {
+      font-size: 1.5em;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    .flor {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background-image: url('flor.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: caer 10s linear infinite;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    @keyframes caer {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    #boton-musica {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      background-color: #ff69b4;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #boton-musica:hover {
+      background-color: #e055a2;
+    }
+
+    #mensaje-amor {
+      margin-top: 30px;
+      font-size: 3em; /* Más grande */
+      color: #d6006f;
+      display: none;
+    }
+
+    #imagen-flor-grande {
+      margin: 30px auto 0 auto;
+      width: 259px; /* Tamaño grande */
+      height: auto;
+      display: none; /* Oculta al inicio */
+    }
+  </style>
+</head>
+<body>
+
+  <h1><span class="flor-emoji">🌸</span> ¡Feliz 21 de Septiembre! <span class="flor-emoji">🌸</span></h1>
+  <div id="contador">Tiempo transcurrido: 0 minutos, 0 segundos</div>
+  <button id="boton-musica">▶️ Reproducir canción</button>
+  
+  <div id="mensaje-amor"></div>
+  <img id="imagen-flor-grande" src="flor-grande.png" alt="Flor grande" />
+
+  <!-- Música -->
+  <audio id="musica" loop>
+    <source src="cancion.mp3" type="audio/mpeg" />
+    Tu navegador no puede reproducir audio.
+  </audio>
+
+  <!-- Script para flores -->
+  <script>
+    function crearFlor() {
+      const flor = document.createElement('div');
+      flor.classList.add('flor');
+      flor.style.left = Math.random() * window.innerWidth + 'px';
+      flor.style.animationDuration = (5 + Math.random() * 5) + 's';
+      flor.style.transform = `scale(${0.5 + Math.random()}) rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(flor);
+
+      setTimeout(() => {
+        flor.remove();
+      }, 10000);
+    }
+
+    setInterval(crearFlor, 300);
+  </script>
+
+  <!-- Script para audio, tiempo y mensaje -->
+  <script>
+  const botonMusica = document.getElementById('boton-musica');
+  const musica = document.getElementById('musica');
+  const mensajeAmor = document.getElementById('mensaje-amor');
+  const imagenFlorGrande = document.getElementById('imagen-flor-grande');
+  const contador = document.getElementById('contador');
+
+  let tiempoInicio;
+
+  botonMusica.addEventListener('click', () => {
+    musica.play();
+    botonMusica.disabled = true;
+    botonMusica.textContent = '🎵 Música reproduciéndose...';
+
+    // Iniciar el tiempo
+    tiempoInicio = Date.now();
+
+    // Mostrar mensaje amoroso
+    mensajeAmor.textContent = 'Eres lo más importante para mí, te amo 💖';
+    mensajeAmor.style.display = 'block';
+
+    // Mostrar imagen grande de la flor
+    imagenFlorGrande.style.display = 'block';
+
+    // Iniciar el contador desde que empieza la música
+    setInterval(() => {
+      const ahora = Date.now();
+      const diferencia = ahora - tiempoInicio;
+      const segundosTotales = Math.floor(diferencia / 1000);
+      const minutos = Math.floor(segundosTotales / 60);
+      const segundos = segundosTotales % 60;
+
+      contador.textContent = `Tiempo transcurrido: ${minutos} minuto${minutos !== 1 ? 's' : ''}, ${segundos} segundo${segundos !== 1 ? 's' : ''}`;
+    }, 1000);
+  });
+</script>
+
+
+</body>
+</html>
